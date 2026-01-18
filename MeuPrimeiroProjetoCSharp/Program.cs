@@ -23,21 +23,53 @@ class Program
         //     Console.WriteLine("O primeiro nome não é Ana");
         // }
 
+        // string primeiroName = string.Equals(names[0], "aNa", StringComparison.OrdinalIgnoreCase)
+        //     ? "O primeiro nome é Ana"
+        //     : "O primeiro nome não é Ana";
+        //
+        // Console.WriteLine(primeiroName);
+
         // string name = "Beatriz";
 
         // Console.WriteLine(name.Length);
         // Console.WriteLine(name.EndsWith("iz"));
 
-        BankAccount account1 = new BankAccount("Ana", 0);
-        BankAccount account2 = new BankAccount("Beatriz", 1000);
+        ILogger logger = new ConsoleLogger();
 
-        // Console.WriteLine("Contas criadas com sucesso!");
+        try
+        {
+            var account1 = CreateAccount(" ", 0, logger);
+            var account2 = CreateAccount("Beatriz", 1000, logger);
 
-        account1.Deposit(500);
+            ShowAccountCreated(account1);
+            ShowAccountCreated(account2);
 
+            account1.Deposit(500);
+            ShowBalance(account1);
+
+            account2.Withdraw(100);
+            ShowBalance(account2);
+        }
+        catch (Exception ex)
+        {
+            logger.Log($"Erro na execução da aplicação: {ex.Message}");
+        }
+    }
+
+    private static BankAccount CreateAccount(string name, decimal balance, ILogger logger)
+    {
+        return new BankAccount(name, balance, logger);
+    }
+
+    private static void ShowAccountCreated(BankAccount account)
+    {
         Console.WriteLine(
-            $"A conta da cliente {account1.GetName()} foi criada com sucesso! E possui o seguinte saldo: R${account1.GetBalance()}");
+            $"A conta da {account.Name} foi criada com sucesso! Saldo inicial: R${account.Balance}");
+    }
+
+    private static void ShowBalance(BankAccount account)
+    {
         Console.WriteLine(
-            $"A conta da cliente {account2.GetName()} foi criada com sucesso! E possui o seguinte saldo: R${account2.GetBalance()}");
+            $"{account.Name}, o saldo atualizado da sua conta é R${account.Balance}");
     }
 }

@@ -2,55 +2,62 @@ namespace MeuPrimeiroProjetoCSharp;
 
 public class BankAccount
 {
-    private string name;
-    private decimal balance;
+    public string Name { get; }
+    public decimal Balance { get; private set; }
 
-    public BankAccount(string name, decimal balance)
+    private readonly ILogger _logger;
+
+    public BankAccount(string name, decimal balance, ILogger logger)
     {
-        if(string.IsNullOrWhiteSpace(name))
-        {
-            throw new ArgumentException("O nome do titular da conta não pode ser vazio.", nameof(name));
-        }
-        if(balance < 0)
-        {
-            throw new ArgumentException("O saldo inicial não pode ser negativo.", nameof(balance));
-        }
-        this.name = name;
-        this.balance = balance;
+        ValidateName(name);
+        ValidateInitialBalance(balance);
+
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+
+        Name = name;
+        Balance = balance;
     }
 
     public void Deposit(decimal amount)
     {
-        if (amount <= 0)
-        {
-            throw new ArgumentException("O valor de depósito deve ser maior que zero.", nameof(amount));
-        }
+        ValidateAmount(amount, "depósito");
 
-        balance += amount;
+        Balance += amount;
+        _logger.Log($"Depósito de R${amount} realizado com sucesso para a conta de {Name}.");
     }
 
     public void Withdraw(decimal amount)
     {
+        ValidateAmount(amount, "saque");
+
+        if (amount > Balance)
+        {
+            _logger.Log($"Tentativa de saque de R${amount} maior que o saldo disponível na conta de {Name}.");
+            throw new InvalidOperationException("Saldo insuficiente para realizar o saque.");
+        }
+
+        Balance -= amount;
+        _logger.Log($"Saque de R${amount} realizado com sucesso da conta de {Name}.");
+    }
+
+    private static void ValidateName(string name)
+    {
+        if (string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException("O nome do titular da conta não pode ser vazio.", nameof(name));
+    }
+
+    private static void ValidateInitialBalance(decimal balance)
+    {
+        if (balance < 0)
+            throw new ArgumentException("O saldo inicial não pode ser negativo.", nameof(balance));
+    }
+
+    private static void ValidateAmount(decimal amount, string operation)
+    {
         if (amount <= 0)
-        {
-            throw new ArgumentException("O valor de saque deve ser maior que zero.", nameof(amount));
-        }
-
-        if (amount > balance)
-        {
-            throw new ArgumentException("O valor do saque é superior ao limite da conta.", nameof(amount));
-        }
-            
-        balance -= amount;
-    }
-
-    public decimal GetBalance()
-    {
-        return balance;
-    }
-
-    public String GetName()
-    {
-        return name;
+            throw new ArgumentException(
+                $"O valor do {operation} deve ser maior que zero.",
+                nameof(amount)
+            );
     }
 }
