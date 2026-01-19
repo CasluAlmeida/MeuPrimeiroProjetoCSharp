@@ -38,7 +38,7 @@ class Program
 
         try
         {
-            var account1 = CreateAccount(" ", 0, logger);
+            var account1 = CreateAccount("Aline", 0, logger);
             var account2 = CreateAccount("Beatriz", 1000, logger);
 
             ShowAccountCreated(account1);
