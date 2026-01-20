@@ -34,21 +34,21 @@ class Program
         // Console.WriteLine(name.Length);
         // Console.WriteLine(name.EndsWith("iz"));
 
-        ILogger logger = new ConsoleLogger();
+        ILogger logger = new FileLogger("log.txt");
 
         try
         {
             var account1 = CreateAccount("Aline", 0, logger);
             var account2 = CreateAccount("Beatriz", 1000, logger);
 
-            ShowAccountCreated(account1);
-            ShowAccountCreated(account2);
+            ShowAccountCreated(account1, logger);
+            ShowAccountCreated(account2, logger);
 
             account1.Deposit(500);
-            ShowBalance(account1);
+            ShowBalance(account1, logger);
 
             account2.Withdraw(100);
-            ShowBalance(account2);
+            ShowBalance(account2, logger);
         }
         catch (Exception ex)
         {
@@ -61,15 +61,13 @@ class Program
         return new BankAccount(name, balance, logger);
     }
 
-    private static void ShowAccountCreated(BankAccount account)
+    private static void ShowAccountCreated(BankAccount account, ILogger logger)
     {
-        Console.WriteLine(
-            $"A conta da {account.Name} foi criada com sucesso! Saldo inicial: R${account.Balance}");
+        logger.Log($"A conta da {account.Name} foi criada com sucesso! Saldo inicial: R${account.Balance}");
     }
 
-    private static void ShowBalance(BankAccount account)
+    private static void ShowBalance(BankAccount account, ILogger logger)
     {
-        Console.WriteLine(
-            $"{account.Name}, o saldo atualizado da sua conta é R${account.Balance}");
+        logger.Log($"{account.Name}, o saldo atualizado da sua conta é R${account.Balance}");
     }
 }
