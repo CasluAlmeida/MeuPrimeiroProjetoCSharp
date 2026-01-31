@@ -34,19 +34,24 @@ class Program
         // Console.WriteLine(name.Length);
         // Console.WriteLine(name.EndsWith("iz"));
 
+        decimal test = 3.99872831m;
+        int convert = (int)test;
+        
+        Console.WriteLine(convert);
 
-        List<int> numbers = new List<int>() { 1, 2, 3, 4, 5 };
 
-        Console.WriteLine(numbers.Count);
-
-        foreach (int n in numbers)
-        {
-            Console.WriteLine(n);
-        }
-
-        DataStore<double> salario = new DataStore<double>();
-        salario.Value = 3000.00;
-        Console.WriteLine(salario.Value);
+        // List<int> numbers = new List<int>() { 1, 2, 3, 4, 5 };
+        //
+        // Console.WriteLine(numbers.Count);
+        //
+        // foreach (int n in numbers)
+        // {
+        //     Console.WriteLine(n);
+        // }
+        //
+        // DataStore<double> salario = new DataStore<double>();
+        // salario.Value = 3000.00;
+        // Console.WriteLine(salario.Value);
 
 
         ILogger logger = new FileLogger("log.txt");
