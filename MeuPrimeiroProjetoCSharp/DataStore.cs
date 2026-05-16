@@ -2,6 +2,6 @@ namespace MeuPrimeiroProjetoCSharp;
 
 public class DataStore<T>
 {
-    public T Value {get; set;}
+    public T Value { get; set; } = default!;
 
 }
