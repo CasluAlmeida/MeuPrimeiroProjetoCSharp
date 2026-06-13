@@ -1,5 +1,115 @@
+# ============================================================
+# .NET / C# — Artefatos de build
+# ============================================================
 bin/
 obj/
+out/
+publish/
+
+# NuGet
 /packages/
-riderModule.iml
+*.nupkg
+*.snupkg
+*.nuspec
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# ============================================================
+# .NET — Arquivos de runtime e diagnóstico
+# ============================================================
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.pidb
+*.booproj
+
+# Crash dumps e profiling
+*.dmp
+*.stackdump
+
+# ============================================================
+# Logs e arquivos temporários
+# ============================================================
+*.log
+*.tmp
+*.temp
+*.cache
+*.bak
+*.orig
+*.swp
+*~
+[Tt]humbs.db
+[Dd]esktop.ini
+
+# ============================================================
+# Configurações locais e credenciais
+# ============================================================
+*.env
+*.env.local
+*.env.*.local
+appsettings.Local.json
+appsettings.*.Local.json
+secrets.json
+local.settings.json
+*.pfx
+*.p12
+*.key
+*.pem
+*.cer
+
+# ============================================================
+# IDE — JetBrains Rider
+# ============================================================
+# Manter: .idea/**/workspace.xml não é versionado (configurações locais)
+# Manter: encodings.xml e vcs.xml podem ser versionados (configuração compartilhável)
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries/
+.idea/**/shelf/
+.idea/**/contentModel.xml
+.idea/**/dataSources/
+.idea/**/dataSources.local.xml
+.idea/**/sqlDataSources.xml
+.idea/**/dynamic.xml
+.idea/**/uiDesigner.xml
+.idea/**/dbnavigator.xml
+.idea/**/gradle.xml
+.idea/**/libraries/
+.idea/**/modules.xml
+*.iml
 /_ReSharper.Caches/
+*.DotSettings.user
+
+# ============================================================
+# IDE — Visual Studio
+# ============================================================
+.vs/
+*.VC.db
+*.VC.opendb
+*.sdf
+*.opensdf
+*.aps
+
+# ============================================================
+# IDE — Visual Studio Code
+# ============================================================
+.vscode/
+
+# ============================================================
+# Sistema operacional
+# ============================================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux
+.Trash-*
+.nfs*
+
+# Windows
+Thumbs.db
+ehthumbs.db
