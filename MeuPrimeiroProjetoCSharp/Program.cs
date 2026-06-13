@@ -4,57 +4,11 @@ class Program
 {
     static void Main(string[] args)
     {
-        // Console.WriteLine("Hello, World!");
+        var logPath = Path.Combine(AppContext.BaseDirectory, "logs", "app.log");
+        ILogger logger = new FileLogger(logPath);
 
-        // Console.WriteLine("Digite seu nome:");
-        // var name = Console.ReadLine();
-
-        // Console.WriteLine("Digite sua idade:");
-        // int idade = Convert.ToInt32(Console.ReadLine());
-
-        // string[] names = { "Ana", "Beatriz", "Carlos", "Daniel", "Eduardo" };
-
-        // if (string.Equals(names[0], "aNa", StringComparison.OrdinalIgnoreCase))
-        // {
-        //     Console.WriteLine("O primeiro nome é Ana");
-        // }
-        // else
-        // {
-        //     Console.WriteLine("O primeiro nome não é Ana");
-        // }
-
-        // string primeiroName = string.Equals(names[0], "aNa", StringComparison.OrdinalIgnoreCase)
-        //     ? "O primeiro nome é Ana"
-        //     : "O primeiro nome não é Ana";
-        //
-        // Console.WriteLine(primeiroName);
-
-        // string name = "Beatriz";
-
-        // Console.WriteLine(name.Length);
-        // Console.WriteLine(name.EndsWith("iz"));
-
-        decimal test = 3.99872831m;
-        int convert = (int)test;
-        
-        Console.WriteLine(convert);
-
-
-        // List<int> numbers = new List<int>() { 1, 2, 3, 4, 5 };
-        //
-        // Console.WriteLine(numbers.Count);
-        //
-        // foreach (int n in numbers)
-        // {
-        //     Console.WriteLine(n);
-        // }
-        //
-        // DataStore<double> salario = new DataStore<double>();
-        // salario.Value = 3000.00;
-        // Console.WriteLine(salario.Value);
-
-
-        ILogger logger = new FileLogger("log.txt");
+        Console.WriteLine($"Logs gravados em: {logPath}");
+        Console.WriteLine();
 
         try
         {
@@ -73,6 +27,7 @@ class Program
         catch (Exception ex)
         {
             logger.Log($"Erro na execução da aplicação: {ex.Message}");
+            Console.Error.WriteLine($"Erro: {ex.Message}");
         }
     }
 
@@ -83,11 +38,15 @@ class Program
 
     private static void ShowAccountCreated(BankAccount account, ILogger logger)
     {
-        logger.Log($"A conta da {account.Name} foi criada com sucesso! Saldo inicial: R${account.Balance}");
+        var message = $"A conta de {account.Name} foi criada com sucesso! Saldo inicial: R${account.Balance:F2}";
+        logger.Log(message);
+        Console.WriteLine(message);
     }
 
     private static void ShowBalance(BankAccount account, ILogger logger)
     {
-        logger.Log($"{account.Name}, o saldo atualizado da sua conta é R${account.Balance}");
+        var message = $"{account.Name}, o saldo atualizado da sua conta é R${account.Balance:F2}";
+        logger.Log(message);
+        Console.WriteLine(message);
     }
 }
